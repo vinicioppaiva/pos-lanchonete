@@ -1,0 +1,107 @@
+.produto-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  
+  /* TAMANHO PADRÃO FIXO */
+  width: 100%;
+  height: 175px; 
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.produto-img {
+  width: 100%;
+  /* Fixamos a altura da imagem para 50% do card */
+  height: 80px; 
+  object-fit: contain; 
+  background-color: #fdfdfd; 
+  padding: 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.produto-detalhes {
+  padding: 2px 4px;
+  display: flex;
+  flex-direction: column;
+  /* Distribui o espaço restante igualmente */
+  justify-content: space-between; 
+  flex-grow: 1;
+}
+
+/* LINHA 2: NOME E PREÇO COLADOS */
+.linha-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  /* Reduzido ao máximo o espaço para a linha de baixo */
+  margin-bottom: -2px; 
+}
+
+.produto-nome {
+  font-weight: bold;
+  font-size: 0.62rem;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.produto-preco {
+  color: #27ae60;
+  font-weight: bold;
+  font-size: 0.62rem;
+}
+
+/* LINHA 3: BOTÕES COM CENTRALIZAÇÃO VERTICAL */
+.linha-controles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  /* Garante que os botões fiquem sempre no fundo do card */
+  margin-bottom: 2px; 
+}
+
+.linha-controles button {
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  
+  /* ALINHAMENTO VERTICAL DOS SINAIS */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-size: 1.3rem;
+  /* Remove qualquer interferência de altura de linha da fonte */
+  line-height: 0; 
+}
+
+.btn-menos { 
+  background: #d32f2f; 
+  color: white; 
+  /* Ajuste fino manual para o sinal de menos não subir */
+  padding-bottom: 2px;
+}
+
+.btn-mais { 
+  background: #27ae60; 
+  color: white; 
+  /* Ajuste fino manual para o sinal de mais centralizar */
+  padding-bottom: 4px;
+}
+
+.label-qtd {
+  font-size: 0.9rem;
+  font-weight: bold;
+  min-width: 15px;
+  text-align: center;
+}
