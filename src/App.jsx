@@ -1,29 +1,31 @@
-import { useState } from 'react'
-import { Header } from './components/Header'
-import { Footer } from './components/Footer'
-import { Produto } from './components/Produto'
+import './App.css';
+import { useState, useRef } from 'react';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
+import { Produto } from './components/Produto';
 
-// Importações das suas imagens
-import imgAgua from './assets/images/agua.png'
-import imgBatata from './assets/images/batatafrita.png'
-import imgBrahma from './assets/images/brahma.png'
-import imgBud from './assets/images/budzero.png'
-import imgChips from './assets/images/chips.png'
-import imgCorona from './assets/images/corona.png'
-import imgEspetinho from './assets/images/espetinho.png'
-import imgGuaravita from './assets/images/guaravita.png'
-import imgHamburguer from './assets/images/hamburguer.png'
-import imgHotdog from './assets/images/hotdog.png'
-import imgMate from './assets/images/mate.png'
-import imgRefri from './assets/images/refrigerante.png'
-import imgSalgado from './assets/images/salgado.png'
-import imgSalsichao from './assets/images/salsichao.png'
-import imgSpaten from './assets/images/spaten.png'
+// Imports de Imagens (Certifique-se de que os caminhos estão corretos)
+import imgHamburguer from './assets/images/hamburguer.png';
+import imgHotdog from './assets/images/hotdog.png';
+import imgSalgado from './assets/images/salgado.png';
+import imgBatata from './assets/images/batatafrita.png';
+import imgEspetinho from './assets/images/espetinho.png';
+import imgSalsichao from './assets/images/salsichao.png';
+import imgChips from './assets/images/chips.png';
+import imgAgua from './assets/images/agua.png';
+import imgGuaravita from './assets/images/guaravita.png';
+import imgMate from './assets/images/mate.png';
+import imgRefri from './assets/images/refrigerante.png';
+import imgBrahma from './assets/images/brahma.png';
+import imgSpaten from './assets/images/spaten.png';
+import imgBud from './assets/images/budzero.png';
+import imgCorona from './assets/images/corona.png';
 
 function App() {
   const [categoriaAtiva, setCategoriaAtiva] = useState('LANCHES');
-  
-  // Estado que guarda a lista de produtos com suas quantidades
+  const timerRef = useRef(null); // Referência para o timer do clique longo
+
+  // Estado Global de Produtos
   const [produtos, setProdutos] = useState([
     { id: 1, nome: "Hamburguer", preco: 22.0, img: imgHamburguer, cat: "LANCHES", qtd: 0 },
     { id: 2, nome: "Hot Dog", preco: 15.0, img: imgHotdog, cat: "LANCHES", qtd: 0 },
@@ -42,37 +44,47 @@ function App() {
     { id: 15, nome: "Corona", preco: 12.0, img: imgCorona, cat: "CERVEJAS", qtd: 0 },
   ]);
 
-  // Função para aumentar ou diminuir a quantidade
+  // Lógica de Alteração de Quantidade
   const alterarQuantidade = (id, valor) => {
-    setProdutos(produtos.map(p => {
-      if (p.id === id) {
-        const novaQtd = p.qtd + valor;
-        return { ...p, qtd: novaQtd < 0 ? 0 : novaQtd };
-      }
-      return p;
-    }));
+    setProdutos(prev => prev.map(p => 
+      p.id === id ? { ...p, qtd: Math.max(0, p.qtd + valor) } : p
+    ));
   };
 
-  // Cálculo do Total Geral
-  const totalGeral = produtos.reduce((acc, p) => acc + (p.preco * p.qtd), 0);
+  // Lógica de "Clique e Segura" para Limpar Carrinho
+  const iniciarTimerLimpar = () => {
+    timerRef.current = setTimeout(() => {
+      if (window.confirm("Deseja zerar todos os itens do carrinho?")) {
+        setProdutos(prev => prev.map(p => ({ ...p, qtd: 0 })));
+      }
+    }, 1200); // Segurar por 1.2 segundos
+  };
 
+  const cancelarTimerLimpar = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+  };
+
+  // Cálculos para o Footer e Botão Flutuante
+  const totalItens = produtos.reduce((acc, p) => acc + p.qtd, 0);
+  const valorTotal = produtos.reduce((acc, p) => acc + (p.preco * p.qtd), 0);
   const produtosFiltrados = produtos.filter(p => p.cat === categoriaAtiva);
 
   return (
-    <div className="App">
+    <div 
+      className="App" 
+      onMouseDown={iniciarTimerLimpar} 
+      onMouseUp={cancelarTimerLimpar}
+      onTouchStart={iniciarTimerLimpar}
+      onTouchEnd={cancelarTimerLimpar}
+    >
       <Header setCategoria={setCategoriaAtiva} />
       
-      <main style={{ 
-        marginTop: '70px', marginBottom: '90px', 
-        display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', 
-        gap: '5px', padding: '5px' 
-      }}>
+      <main className='conteudo-principal'>
         {produtosFiltrados.map((prod) => (
           <Produto 
             key={prod.id} 
-            nome={prod.nome} 
-            preco={prod.preco} 
-            imagem={prod.img} 
+            {...prod} 
+            imagem={prod.img}
             quantidade={prod.qtd}
             onAdd={() => alterarQuantidade(prod.id, 1)}
             onRemove={() => alterarQuantidade(prod.id, -1)}
@@ -80,9 +92,17 @@ function App() {
         ))}
       </main>
 
-      <Footer total={totalGeral} />
+      {/* Botão Flutuante do Carrinho - Aparece apenas se houver itens 
+      {totalItens > 0 && (
+        <button className="btn-flutuante-carrinho" onClick={() => alert('Abrindo tela de revisão...')}>
+          <span className="badge-carrinho">{totalItens}</span>
+          🛒
+        </button>
+      )}
+*/}
+      <Footer total={valorTotal} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

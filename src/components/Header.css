@@ -1,20 +1,68 @@
-.header-container {
+.header-master {
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
-  height: 60px;
-  background-color: #d32f2f; /* Vermelho lanchonete */
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  /* Fundo vermelho para todo o conjunto */
+  background-color: #e74c3c; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   z-index: 1000;
 }
 
-.header-container span {
+.header-top {
+  display: flex;
+  align-items: center;
+  padding: 5px 15px; /* Padding reduzido para ser mais curto */
+  gap: 15px; /* Espaço entre as barras e o texto */
+  height: 40px; /* Altura menor para o topo */
+}
+
+.btn-menu-operacional {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: none;
+  border: none;
   cursor: pointer;
-  padding: 10px;
+  padding: 0;
+}
+
+.btn-menu-operacional span {
+  width: 18px;
+  height: 2px;
+  /* Barras agora brancas para contrastar com o vermelho */
+  background-color: white; 
+  border-radius: 2px;
+}
+
+.caixa-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  /* Alinhamento à esquerda garantido pelo flex do header-top */
+}
+
+.caixa-numero {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white; /* Texto branco */
+}
+
+.operador-nome {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.8); /* Branco levemente transparente */
+  font-weight: 500;
+}
+
+.header-categories {
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Linha sutil de separação */
+}
+
+.header-categories span {
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+  cursor: pointer;
 }
