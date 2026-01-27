@@ -1,0 +1,55 @@
+.pagina-carrinho-simples {
+  padding: 20px;
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo-revisar {
+  color: #e74c3c;
+  margin-bottom: 20px;
+}
+
+.lista-texto {
+  flex: 1;
+  text-align: left;
+}
+
+.linha-produto {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.linha-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+.botoes-carrinho {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-voltar-simples {
+  padding: 15px;
+  background-color: #7f8c8d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.btn-pagar-simples {
+  padding: 15px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}

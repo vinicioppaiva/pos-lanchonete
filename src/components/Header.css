@@ -2,67 +2,40 @@
   position: fixed;
   top: 0;
   width: 100%;
-  /* Fundo vermelho para todo o conjunto */
-  background-color: #e74c3c; 
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   z-index: 1000;
+  background-color: #e74c3c; /* Vermelho original */
 }
 
 .header-top {
   display: flex;
   align-items: center;
-  padding: 5px 15px; /* Padding reduzido para ser mais curto */
-  gap: 15px; /* Espaço entre as barras e o texto */
-  height: 40px; /* Altura menor para o topo */
-}
-
-.btn-menu-operacional {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.btn-menu-operacional span {
-  width: 18px;
-  height: 2px;
-  /* Barras agora brancas para contrastar com o vermelho */
-  background-color: white; 
-  border-radius: 2px;
+  padding: 10px 15px;
+  gap: 15px;
 }
 
 .caixa-info {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
-  /* Alinhamento à esquerda garantido pelo flex do header-top */
+  color: white;
 }
 
-.caixa-numero {
-  font-size: 0.75rem;
-  font-weight: bold;
-  color: white; /* Texto branco */
-}
-
-.operador-nome {
-  font-size: 0.6rem;
-  color: rgba(255, 255, 255, 0.8); /* Branco levemente transparente */
-  font-weight: 500;
-}
+.caixa-numero { font-weight: bold; font-size: 1.1rem; }
+.operador-nome { font-size: 0.8rem; opacity: 0.9; }
 
 .header-categories {
   display: flex;
+  background-color: #f8f9fa;
+  padding: 5px;
   justify-content: space-around;
-  padding: 8px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Linha sutil de separação */
 }
 
-.header-categories span {
-  color: white;
-  font-weight: bold;
+.btn-cat {
+  border: 1px solid #ddd;
+  background: white;
+  padding: 8px 15px;
+  border-radius: 20px;
   font-size: 0.8rem;
+  font-weight: bold;
+  color: #555;
   cursor: pointer;
 }

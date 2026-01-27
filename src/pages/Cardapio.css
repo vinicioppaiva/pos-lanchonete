@@ -1,0 +1,19 @@
+.pagina-cardapio {
+  padding-top: 100px; /* Espaço para o Header fixo não cobrir os produtos */
+  padding-bottom: 80px; /* Espaço para o Footer */
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+.conteudo-principal {
+  padding: 10px;
+}
+
+.grid-produtos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas fixas */
+  gap: 10px;
+  padding: 10px;
+  margin-top: 110px; /* Espaço para o Header fixo */
+  margin-bottom: 80px; /* Espaço para o Footer fixo */
+}

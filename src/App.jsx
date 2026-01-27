@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import './App.css';
-import { useState, useRef } from 'react';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
-import { Produto } from './components/Produto';
 
-// Imports de Imagens (Certifique-se de que os caminhos estão corretos)
+// Importação das Páginas
+import Login from './pages/Login';
+import Cardapio from './pages/Cardapio';
+import Carrinho from './pages/Carrinho';
+import Pagamento from './pages/Pagamento';
+
+// Imports de Imagens
 import imgHamburguer from './assets/images/hamburguer.png';
 import imgHotdog from './assets/images/hotdog.png';
 import imgSalgado from './assets/images/salgado.png';
@@ -22,10 +25,11 @@ import imgBud from './assets/images/budzero.png';
 import imgCorona from './assets/images/corona.png';
 
 function App() {
-  const [categoriaAtiva, setCategoriaAtiva] = useState('LANCHES');
-  const timerRef = useRef(null); // Referência para o timer do clique longo
-
-  // Estado Global de Produtos
+  // 1. Estados de Navegação e Usuário
+  const [telaAtual, setTelaAtual] = useState('LOGIN');
+  const [dadosCaixa, setDadosCaixa] = useState({ nome: '', quiosque: '' });
+  
+  // 2. Estado Global de Produtos
   const [produtos, setProdutos] = useState([
     { id: 1, nome: "Hamburguer", preco: 22.0, img: imgHamburguer, cat: "LANCHES", qtd: 0 },
     { id: 2, nome: "Hot Dog", preco: 15.0, img: imgHotdog, cat: "LANCHES", qtd: 0 },
@@ -44,63 +48,60 @@ function App() {
     { id: 15, nome: "Corona", preco: 12.0, img: imgCorona, cat: "CERVEJAS", qtd: 0 },
   ]);
 
-  // Lógica de Alteração de Quantidade
-  const alterarQuantidade = (id, valor) => {
+  // 3. Cálculos Automáticos
+  const valorTotal = produtos.reduce((acc, p) => acc + (p.preco * p.qtd), 0);
+  const totalItens = produtos.reduce((acc, p) => acc + p.qtd, 0);
+
+  // 4. Funções de Ação
+  const fazerLogin = (nome, quiosque) => {
+    setDadosCaixa({ nome, quiosque });
+    setTelaAtual('CARDAPIO');
+  };
+
+  const alterarQuantidade = (id, delta) => {
     setProdutos(prev => prev.map(p => 
-      p.id === id ? { ...p, qtd: Math.max(0, p.qtd + valor) } : p
+      p.id === id ? { ...p, qtd: Math.max(0, p.qtd + delta) } : p
     ));
   };
 
-  // Lógica de "Clique e Segura" para Limpar Carrinho
-  const iniciarTimerLimpar = () => {
-    timerRef.current = setTimeout(() => {
-      if (window.confirm("Deseja zerar todos os itens do carrinho?")) {
-        setProdutos(prev => prev.map(p => ({ ...p, qtd: 0 })));
-      }
-    }, 1200); // Segurar por 1.2 segundos
-  };
-
-  const cancelarTimerLimpar = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-  };
-
-  // Cálculos para o Footer e Botão Flutuante
-  const totalItens = produtos.reduce((acc, p) => acc + p.qtd, 0);
-  const valorTotal = produtos.reduce((acc, p) => acc + (p.preco * p.qtd), 0);
-  const produtosFiltrados = produtos.filter(p => p.cat === categoriaAtiva);
-
   return (
-    <div 
-      className="App" 
-      onMouseDown={iniciarTimerLimpar} 
-      onMouseUp={cancelarTimerLimpar}
-      onTouchStart={iniciarTimerLimpar}
-      onTouchEnd={cancelarTimerLimpar}
-    >
-      <Header setCategoria={setCategoriaAtiva} />
-      
-      <main className='conteudo-principal'>
-        {produtosFiltrados.map((prod) => (
-          <Produto 
-            key={prod.id} 
-            {...prod} 
-            imagem={prod.img}
-            quantidade={prod.qtd}
-            onAdd={() => alterarQuantidade(prod.id, 1)}
-            onRemove={() => alterarQuantidade(prod.id, -1)}
-          />
-        ))}
-      </main>
-
-      {/* Botão Flutuante do Carrinho - Aparece apenas se houver itens 
-      {totalItens > 0 && (
-        <button className="btn-flutuante-carrinho" onClick={() => alert('Abrindo tela de revisão...')}>
-          <span className="badge-carrinho">{totalItens}</span>
-          🛒
-        </button>
+    <div className="App">
+      {/* Navegação entre telas baseada no estado telaAtual */}
+      {telaAtual === 'LOGIN' && (
+        <Login onLogin={fazerLogin} />
       )}
-*/}
-      <Footer total={valorTotal} />
+
+      {telaAtual === 'CARDAPIO' && (
+        <Cardapio 
+          produtos={produtos}
+          valorTotal={valorTotal}
+          dadosCaixa={dadosCaixa}
+          alterarQuantidade={alterarQuantidade} // RESOLVE O ERRO
+          onAbrirCarrinho={() => setTelaAtual('CARRINHO')}
+        />
+      )}
+
+      {telaAtual === 'CARRINHO' && (
+        <Carrinho 
+          produtos={produtos}
+          valorTotal={valorTotal}
+          onVoltar={() => setTelaAtual('CARDAPIO')}
+          onPagar={() => setTelaAtual('PAGAMENTO')}
+          alterarQuantidade={alterarQuantidade}
+        />
+      )}
+
+      {telaAtual === 'PAGAMENTO' && (
+        <Pagamento 
+          valorTotal={valorTotal}
+          onVoltar={() => setTelaAtual('CARRINHO')}
+          onFinalizar={() => {
+            alert("Venda realizada com sucesso!");
+            setProdutos(prev => prev.map(p => ({ ...p, qtd: 0 })));
+            setTelaAtual('CARDAPIO'); 
+          }}
+        />
+      )}
     </div>
   );
 }

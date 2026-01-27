@@ -1,4 +1,4 @@
-/* 1. Reset para ocupar 100% da tela da Safra */
+/* Reset Global */
 #root {
   width: 100%;
   margin: 0;
@@ -6,64 +6,17 @@
   text-align: center;
 }
 
-/* 2. Fundo da aplicação */
+/* Fundo base para todas as telas do PDV */
 .App {
   width: 100%;
   min-height: 100vh;
-  background-color: #f4f4f4;
-}
-
-/* 3. Container dos produtos (GRID) */
-.conteudo-principal {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* 3 colunas para a tela esbelta */
-  gap: 5px;
-  padding: 5px;
-  margin-top: 95px;    /* Espaço para o Header vermelho */
-  margin-bottom: 90px; /* Espaço para o Footer */
-}
-
-/* 
-   ============================================================
-
-.btn-flutuante-carrinho {
-  position: fixed;
-  bottom: 110px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #27ae60;
-  color: white;
-  border: none;
-  font-size: 1.8rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  cursor: pointer;
-  z-index: 1001;
+  background-color: #f4f4f4; /* Cor de contraste para os cards brancos */
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
 }
 
-.badge-carrinho {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  background-color: #e74c3c;
-  color: white;
-  font-size: 0.8rem;
-  font-weight: bold;
-  min-width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid white;
+/* Estilo comum para as páginas ocuparem a tela toda */
+.pagina-container {
+  width: 100%;
+  min-height: 100vh;
 }
-
-.btn-flutuante-carrinho:active {
-  transform: scale(0.9);
-  background-color: #219150;
-}
-============================================================ */
