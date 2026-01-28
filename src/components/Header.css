@@ -3,39 +3,46 @@
   top: 0;
   width: 100%;
   z-index: 1000;
-  background-color: #e74c3c; /* Vermelho original */
+  background-color: #e74c3c; 
 }
 
 .header-top {
   display: flex;
   align-items: center;
   padding: 10px 15px;
+  background-color: #e74c3c;
   gap: 15px;
+}
+
+.header-categories {
+  display: flex;
+  background-color: #e00808;
+  padding: 5px;
+  justify-content: space-around;
+}
+
+.btn-menu-operacional span {
+  width: 20px;
+  height: 1px;
+  background-color: white;
+  display: block;
 }
 
 .caixa-info {
   display: flex;
   flex-direction: column;
+  align-items: flex-start; 
   color: white;
+  line-height: 1.2;
 }
 
-.caixa-numero { font-weight: bold; font-size: 1.1rem; }
-.operador-nome { font-size: 0.8rem; opacity: 0.9; }
-
-.header-categories {
-  display: flex;
-  background-color: #f8f9fa;
-  padding: 5px;
-  justify-content: space-around;
-}
-
-.btn-cat {
-  border: 1px solid #ddd;
-  background: white;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 0.8rem;
+.caixa-numero {
   font-weight: bold;
-  color: #555;
-  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.operador-nome {
+  font-size: 0.75rem; 
+  opacity: 0.9;
+  text-transform: uppercase;
 }

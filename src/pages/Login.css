@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #e74c3c; /* Vermelho Safra */
+  background-color: #e74c3c; 
   color: white;
 }
 
@@ -55,7 +55,7 @@
 
 .btn-entrar {
   padding: 18px;
-  background-color: #27ae60; /* Verde para destacar */
+  background-color: #27ae60; 
   color: white;
   border: none;
   border-radius: 8px;
